@@ -1,5 +1,7 @@
 # `katistix/mersul-microbuzelor-app`
 
+<a href="https://www.buymeacoffee.com/katistix" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee"></a>
+
 This is a simple web application that allows users to search for bus routes and schedules in Romania. The app is meant to showcase the usage of [katistix/mersul-microbuzelor](https://github.com/katistix/mersul-microbuzelor) package that I created.
 
 ## :sparkling_heart: Support my projects
