@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { dateStringAtom, fromCityAtom, toCityAtom } from "@/lib/atoms";
 import { useAtom } from "jotai";
+import { Loader2 } from "lucide-react";
 import { DepartureOutput } from "mersul-microbuzelor";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -17,12 +18,16 @@ export default function Home() {
     const [toCity, setToCity] = useAtom(toCityAtom);
     const [dateString, setDateString] = useAtom(dateStringAtom);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const [departures, setDepartures] = useState<DepartureOutput[]>([]);
 
     const handleGetDepartures = async () => {
+        setIsLoading(true);
         // Make sure the strings are not empty
         if (!fromCity || !toCity || !dateString) {
             toast.error("Te rog sa completezi toate campurile!");
+            setIsLoading(false);
             return;
         }
 
@@ -42,6 +47,7 @@ export default function Home() {
         if (!res.ok) {
             setDepartures([]);
             toast.error("A aparut o eroare la incarcarea datelor!");
+            setIsLoading(false);
             return;
         }
 
@@ -49,7 +55,7 @@ export default function Home() {
 
         setDepartures(data);
 
-        console.log(data);
+        setIsLoading(false);
         toast.success("Rezultatele au fost incarcate cu succes!");
     };
 
@@ -76,15 +82,14 @@ export default function Home() {
                     onChange={(e) => setToCity(e.target.value)}
                 />
                 <CalendarZi />
-                <Button onClick={handleGetDepartures}>Cauta </Button>
+                <Button disabled={isLoading} onClick={handleGetDepartures}>
+                    {isLoading && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
+                    Cauta
+                </Button>
             </div>
 
-            {/* Departure display */}
-            {/* <div>
-                {departures.map((departure, i) => (
-                    <div key={i}>{departure.departure_time}</div>
-                ))}
-            </div> */}
             <DeparturesTable departures={departures} />
 
             {/* Bottom credits */}
