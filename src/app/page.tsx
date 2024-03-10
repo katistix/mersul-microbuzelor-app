@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = "edge";
+
 import { CalendarZi } from "@/components/CalendarZi";
 import { DeparturesTable } from "@/components/DeparturesTable";
 import { Button } from "@/components/ui/button";
